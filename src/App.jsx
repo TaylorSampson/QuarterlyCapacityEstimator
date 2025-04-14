@@ -45,11 +45,27 @@ export default function CapacityEstimator() {
             <legend className="text-xl font-bold text-[#545454] mb-2">About the Team</legend>
 
             <label className="block mb-2">What's the average velocity from the last 6 sprints?
-              <input type="number" min="1" required value={velocity} onChange={e => setVelocity(+e.target.value)} className="block w-full mt-1 p-2 border rounded-md"/>
+              <input
+                type="number"
+                min="1"
+                required
+                value={velocity}
+                onFocus={e => e.target.value === "0" && setVelocity("")}
+                onChange={e => setVelocity(+e.target.value)}
+                className="block w-full mt-1 p-2 border rounded-md"
+              />
             </label>
 
             <label className="block mb-2">How many Engineers are on the team?
-              <input type="number" min="1" required value={teamSize} onChange={e => setTeamSize(+e.target.value)} className="block w-full mt-1 p-2 border rounded-md"/>
+              <input
+                type="number"
+                min="1"
+                required
+                value={teamSize}
+                onFocus={e => e.target.value === "0" && setTeamSize("")}
+                onChange={e => setTeamSize(+e.target.value)}
+                className="block w-full mt-1 p-2 border rounded-md"
+              />
             </label>
 
             <div className="bg-gray-100 border-l-4 border-[#5271ff] p-4 my-4 rounded">
@@ -60,11 +76,27 @@ export default function CapacityEstimator() {
             </div>
 
             <label className="block mb-2">How many days <i>collectively</i> should be removed?
-              <input type="number" min="0" value={removeDays} onChange={e => setRemoveDays(+e.target.value)} className="block w-full mt-1 p-2 border rounded-md"/>
+              <input
+                type="number"
+                min="0"
+                value={removeDays}
+                onFocus={e => e.target.value === "0" && setRemoveDays("")}
+                onChange={e => setRemoveDays(+e.target.value)}
+                className="block w-full mt-1 p-2 border rounded-md"
+              />
+
             </label>
 
             <label className="block mb-2">How many <strong>Company Holidays</strong> should be added?
-              <input type="number" min="0" value={holidays} onChange={e => setHolidays(+e.target.value)} className="block w-full mt-1 p-2 border rounded-md"/>
+              <input
+                type="number"
+                min="0"
+                value={holidays}
+                onFocus={e => e.target.value === "0" && setHolidays("")}
+                onChange={e => setHolidays(+e.target.value)}
+                className="block w-full mt-1 p-2 border rounded-md"
+              />
+
             </label>
           </fieldset>
 
