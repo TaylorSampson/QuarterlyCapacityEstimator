@@ -46,24 +46,27 @@ export default function CapacityEstimator() {
 
             <label className="block mb-2">What's the average velocity from the last 6 sprints?
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 min="1"
                 required
                 value={velocity}
-                onFocus={e => e.target.value === "0" && setVelocity("")}
-                onChange={e => setVelocity(+e.target.value)}
+                onFocus={e => setTimeout(() => e.target.select(), 0)}
+                onChange={e => setVelocity(+e.target.value.replace(/\D/g, ""))}
                 className="block w-full mt-1 p-2 border rounded-md"
               />
             </label>
 
             <label className="block mb-2">How many Engineers are on the team?
               <input
-                type="number"
+                type="text"
+                pattern="[0-9]*"
                 min="1"
                 required
                 value={teamSize}
-                onFocus={e => e.target.value === "0" && setTeamSize("")}
-                onChange={e => setTeamSize(+e.target.value)}
+                onFocus={e => setTimeout(() => e.target.select(), 0)}
+                onChange={e => setTeamSize(+e.target.value.replace(/\D/g, ""))}
                 className="block w-full mt-1 p-2 border rounded-md"
               />
             </label>
@@ -77,11 +80,12 @@ export default function CapacityEstimator() {
 
             <label className="block mb-2">How many days <i>collectively</i> should be removed?
               <input
-                type="number"
+                type="text"
+                pattern="[0-9]*"
                 min="0"
                 value={removeDays}
-                onFocus={e => e.target.value === "0" && setRemoveDays("")}
-                onChange={e => setRemoveDays(+e.target.value)}
+                onFocus={e => setTimeout(() => e.target.select(), 0)}
+                onChange={e => setRemoveDays(+e.target.value.replace(/\D/g, ""))}
                 className="block w-full mt-1 p-2 border rounded-md"
               />
 
@@ -89,20 +93,26 @@ export default function CapacityEstimator() {
 
             <label className="block mb-2">How many <strong>Company Holidays</strong> should be added?
               <input
-                type="number"
+                type="text"
+                pattern="[0-9]*"
                 min="0"
                 value={holidays}
-                onFocus={e => e.target.value === "0" && setHolidays("")}
-                onChange={e => setHolidays(+e.target.value)}
+                onFocus={e => setTimeout(() => e.target.select(), 0)}
+                onChange={e => setHolidays(+e.target.value.replace(/\D/g, ""))}
                 className="block w-full mt-1 p-2 border rounded-md"
               />
 
             </label>
           </fieldset>
 
-          <button type="submit" className="bg-[#5271ff] text-white py-3 px-6 font-bold rounded-md hover:bg-[#3f5de1] transition-transform duration-300 transform hover:scale-105">
-            Calculate
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="bg-[#5271ff] text-white py-3 px-6 font-bold rounded-md hover:bg-[#3f5de1] transition-transform duration-300 transform hover:scale-105"
+            >
+              Calculate
+            </button>
+          </div>
         </form>
 
         <AnimatePresence>
@@ -115,11 +125,11 @@ export default function CapacityEstimator() {
               transition={{ duration: 0.6 }}
               className="mt-6 bg-[#d4d4d4] p-6 rounded-md text-center shadow-md"
             >
-              <h2 className="text-2xl font-bold text-[#5271ff]">Recommended Capacity</h2>
+              <h2 className="text-2xl font-bold text-[#5271ff]">Recommended Capacity Commitment:</h2>
               <hr className="my-4 border-t-2 border-gray-400" />
               <p><strong>Max Capacity:</strong> {results.maxQuarterCapacity}</p>
-              <p><strong>Max Available Capacity:</strong> {results.maxWithVariance}</p>
-              <p><strong>Capacity with Reserve:</strong> {results.adjustedWithReserve}</p>
+              <p><strong>Max Available Capacity (after PTO & Holidays):</strong> {results.maxWithVariance}</p>
+              <p><strong>Capacity with Reserve (20%):</strong> {results.adjustedWithReserve}</p>
             </motion.div>
           )}
         </AnimatePresence>
