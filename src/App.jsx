@@ -59,6 +59,7 @@ export default function CapacityEstimator() {
                 <p className="text-sm text-gray-500 mt-1">
                   In Jira, please refer to your eazyBI team dashboard “Velocity” section or the Velocity chart in Team Reports.
                 </p>
+                <br />
             </label>
 
             <label className="block mb-2">How many Engineers are on the team?
