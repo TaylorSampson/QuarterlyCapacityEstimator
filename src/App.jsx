@@ -96,7 +96,10 @@ export default function CapacityEstimator() {
             <label className="block mb-2">Average velocity from the last 6 sprints:
               <input type="text" inputMode="numeric" value={velocity} onFocus={e => setTimeout(() => e.target.select(), 0)} onChange={e => setVelocity(+e.target.value.replace(/\D/g, ""))} className="block w-full mt-1 p-2 border rounded-md" required />
             </label>
-
+                <p className="text-sm text-gray-500 mt-1">
+                  In Jira, please refer to your eazyBI team dashboard “Velocity” section or the Velocity chart in Team Reports.
+                </p>
+                <br />
             <label className="block mb-2">Number of Engineers on the team:
               <input type="text" inputMode="numeric" value={teamSize} onFocus={e => setTimeout(() => e.target.select(), 0)} onChange={e => setTeamSize(+e.target.value.replace(/\D/g, ""))} className="block w-full mt-1 p-2 border rounded-md" required />
             </label>
