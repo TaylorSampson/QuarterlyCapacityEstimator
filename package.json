@@ -25,5 +25,13 @@
     "postcss": "^8.4.21",
     "tailwindcss": "^3.4.1",
     "vite": "^5.0.0"
-  }
+  },
+  "scripts": {
+  "build": "vite build",
+  "build:gh": "DEPLOY_TARGET=GH vite build",
+  "dev": "vite",
+  "preview": "vite preview",
+  "deploy": "gh-pages -d dist"
+}
+
 }
