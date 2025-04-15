@@ -56,6 +56,9 @@ export default function CapacityEstimator() {
                 onChange={e => setVelocity(+e.target.value.replace(/\D/g, ""))}
                 className="block w-full mt-1 p-2 border rounded-md"
               />
+                <p className="text-sm text-gray-500 mt-1">
+                  In Jira, please refer to your eazyBI team dashboard “Velocity” section or the Velocity chart in Team Reports.
+                </p>
             </label>
 
             <label className="block mb-2">How many Engineers are on the team?
