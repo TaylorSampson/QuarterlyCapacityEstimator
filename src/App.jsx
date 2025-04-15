@@ -126,14 +126,17 @@ export default function CapacityEstimator() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.6 }}
-              className="mt-6 bg-[#d4d4d4] p-6 rounded-md text-center shadow-md"
+              className="mt-6 p-[4px] rounded-md bg-gradient-to-r from-[#3f5de1] to-[#4a39a6] shadow-md"
             >
-              <h2 className="text-2xl font-bold text-[#5271ff]">Recommended Capacity Commitment:</h2>
-              <hr className="my-4 border-t-2 border-gray-400" />
-              <p><strong>Max Capacity:</strong> {results.maxQuarterCapacity}</p>
-              <p><strong>Max Available Capacity (after PTO & Holidays):</strong> {results.maxWithVariance}</p>
-              <p><strong>Capacity with Reserve (20%):</strong> {results.adjustedWithReserve}</p>
+              <div className="bg-white rounded-md p-6 text-center">
+                <h2 className="text-2xl font-bold text-[#3f5de1]">Recommended Capacity Commitment:</h2>
+                <hr className="my-4 border-t-2 border-gray-200" />
+                <p className="text-gray-600"><strong>Max Capacity:</strong> {results.maxQuarterCapacity}</p>
+                <p className="text-gray-600"><strong>Max Available Capacity (after PTO & Holidays):</strong> {results.maxWithVariance}</p>
+                <p className="text-gray-600"><strong>Capacity with Reserve (20%):</strong> {results.adjustedWithReserve}</p>
+              </div>
             </motion.div>
+
           )}
         </AnimatePresence>
       </div>
