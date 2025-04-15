@@ -1,55 +1,54 @@
-import GaugeChart from 'react-gauge-chart';
+import {
+  CircularProgressbarWithChildren,
+  buildStyles,
+} from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 
 export default function SprintGauge({ percentage }) {
-  let warning = '';
-  let colors = ['#00C49F', '#00C49F', '#00C49F']; // default green
+  let warning = "";
+  let color = "#00C49F";
 
   if (percentage > 1.25) {
     warning = `🚨 Overcommitted by ${Math.round((percentage - 1) * 100)}%`;
-    colors = ['#FF5F6D', '#FF5F6D', '#FF5F6D']; // red
+    color = "#FF5F6D";
   } else if (percentage > 1.1) {
     warning = `🟠 Overcommitted by ${Math.round((percentage - 1) * 100)}%`;
-    colors = ['#FDC830', '#FF8C00', '#FF8C00']; // orange
+    color = "#FF8C00";
   } else if (percentage > 1) {
     warning = `⚠️ Overcommitted by ${Math.round((percentage - 1) * 100)}%`;
-    colors = ['#FDC830', '#FDC830', '#FDC830']; // yellow
+    color = "#FDC830";
   }
 
-  // ✅ Define the clamped value here for use in the chart
-  const clamped = Math.min(percentage, 1.25);
+  const clamped = Math.min(percentage, 1.5);
 
   return (
-    <>
-      <GaugeChart
-        key={colors.join('')}
-        id="sprint-load-gauge"
-        nrOfLevels={3}
-        percent={clamped}
-        colors={colors}
-        arcPadding={0.05}
-        arcWidth={0.3}
-        needleColor="#545454"
-        needleBaseColor="#545454"
-        textColor="#545454"
-        animate={true}
-        hideText={true}
-      />
-
-      <style jsx="true">{`
-        #sprint-load-gauge .needle,
-        #sprint-load-gauge .needle-base {
-          transition: transform 1.2s ease-out !important;
-        }
-      `}</style>
-
-      <div className="text-xl font-bold mt-4">
-        {Math.round(percentage * 100)}%
+    <div className="my-8 text-center">
+      <h2 className="text-xl font-bold text-[#5271ff] mb-2">
+        Commitment Load
+      </h2>
+      <div style={{ width: 220, height: 120, margin: "0 auto" }}>
+        <CircularProgressbarWithChildren
+          value={clamped}
+          maxValue={1.5}
+          circleRatio={0.5}
+          styles={buildStyles({
+            rotation: 0.75,
+            strokeLinecap: "round",
+            pathColor: color,
+            trailColor: "#eee",
+            pathTransitionDuration: 0.5,
+          })}
+        >
+          <div className="text-black text-xl font-bold mt-4">
+            {Math.round(clamped * 100)}%
+          </div>
+        </CircularProgressbarWithChildren>
       </div>
-
       {warning && (
-        <p className="mt-1 font-semibold text-[#ff5f5f]">{warning}</p>
+        <p className="mt-6 font-semibold text-[#ff5f5f]">{warning}</p>
       )}
-    </>
+    </div>
   );
 }
+
 
