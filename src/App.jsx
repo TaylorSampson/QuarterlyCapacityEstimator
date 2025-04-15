@@ -1,6 +1,9 @@
 // React version of the Capacity Estimator with animations using Framer Motion
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ScenarioChart from './ScenarioChart';
+import SprintGauge from './SprintGauge';
+
 
 export default function CapacityEstimator() {
   const [velocity, setVelocity] = useState(0);
@@ -8,6 +11,9 @@ export default function CapacityEstimator() {
   const [removeDays, setRemoveDays] = useState(0);
   const [holidays, setHolidays] = useState(0);
   const [results, setResults] = useState(null);
+  const [chartData, setChartData] = useState([]);
+  const [plannedPoints, setPlannedPoints] = useState(0);
+
 
   const calculate = (e) => {
     e.preventDefault();
@@ -24,6 +30,38 @@ export default function CapacityEstimator() {
 
     const maxAvailableCapacity = maxQuarterCapacity - totalAdjustments;
     const adjustedWithReserve = maxAvailableCapacity * 0.8;
+
+    const scenarioData = [
+      { name: 'Max Capacity', capacity: Math.round(maxQuarterCapacity) },
+      { name: 'Adjusted Capacity', capacity: Math.round(maxAvailableCapacity) },
+      { name: 'With Reserve (80%)', capacity: Math.round(adjustedWithReserve) },
+
+          // 🔮 What-if Scenarios
+          {
+            name: 'Add 1 Engineer (Max)',
+            capacity: Math.round(((velocity / teamSize) * (teamSize + 0.75)) * sprints - totalAdjustments),
+          },
+          {
+            name: 'Lose 1 Engineer',
+            capacity: teamSize > 1
+              ? Math.round(((velocity / teamSize) * (teamSize - 1)) * sprints - totalAdjustments)
+              : 0,
+          },
+          {
+            name: 'Lose 2 Engineers',
+            capacity: teamSize > 2
+              ? Math.round(((velocity / teamSize) * (teamSize - 2)) * sprints - totalAdjustments)
+              : 0,
+          },
+          {
+            name: 'Remove 3 More OOO Days',
+            capacity: Math.round(maxQuarterCapacity - ((removeDays + 3) * pointsPerDay + holidayAdjustment)),
+          }
+        ];
+
+
+    setChartData(scenarioData);
+
 
     setResults({
       maxQuarterCapacity: Math.round(maxQuarterCapacity),
@@ -103,6 +141,21 @@ export default function CapacityEstimator() {
               />
 
             </label>
+
+             <label className="block mb-2">
+            How many points are you planning to commit to this quarter?
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              value={plannedPoints}
+              onFocus={e => setTimeout(() => e.target.select(), 0)}
+              onChange={e => setPlannedPoints(+e.target.value.replace(/\D/g, ""))}
+              className="block w-full mt-1 p-2 border rounded-md"
+            />
+          </label>
+
+
           </fieldset>
 
           <div className="flex justify-center">
@@ -133,6 +186,25 @@ export default function CapacityEstimator() {
             </motion.div>
           )}
         </AnimatePresence>
+        <AnimatePresence>
+          {results && (
+            <motion.div
+              key="chart"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.6 }}
+            >
+              <ScenarioChart capacityData={chartData} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+          {results && plannedPoints > 0 && (
+            <SprintGauge percentage={plannedPoints / results.maxQuarterCapacity} />
+          )}
+
+
       </div>
     </div>
   );
