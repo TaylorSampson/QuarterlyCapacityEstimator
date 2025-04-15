@@ -55,7 +55,7 @@ npm run dev
 
 ---
 
-## ✨ Features
+## Features
 
 - Gradient-styled UI with card layouts
 - Responsive design
@@ -78,20 +78,7 @@ src/
 
 ---
 
-## 🚀 Planned Enhancements
-
-- Export to PDF / PNG
-- Support multiple teams or quarters
-- Add toggles for optimistic/pessimistic scenarios
-
----
-
-## 🙌 Credits
-
-Crafted with ✨ by [Taylor Sampson](https://github.com/taylorsampson)
-
----
 
 ## 📝 License
 
-MIT — feel free to fork, remix, and build on it!
+MIT 
