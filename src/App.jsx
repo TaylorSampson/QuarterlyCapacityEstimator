@@ -35,10 +35,6 @@ export default function CapacityEstimator() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#edf0f2] to-[#f6f8fa] font-nunito p-4">
       <div className="max-w-3xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="text-center py-8 bg-gradient-to-r from-[#3f5de1] to-[#4a39a6] text-white rounded-lg shadow-lg">
-          <h1 className="text-3xl font-bold">Quarterly Capacity Estimator</h1>
-          <p className="mt-2">Use this to build a baseline estimation for your team's upcoming Quarter</p>
-        </motion.div>
 
         <form onSubmit={calculate} className="bg-white mt-6 p-6 rounded-md shadow-md">
           <fieldset className="mb-4">
